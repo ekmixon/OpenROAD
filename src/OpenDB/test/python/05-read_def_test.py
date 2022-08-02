@@ -10,6 +10,6 @@ db = odb.dbDatabase.create()
 odb.read_lef(db, os.path.join(data_dir, "gscl45nm.lef"))
 odb.read_def(db, os.path.join(data_dir, "design.def"))
 chip = db.getChip()
-if chip == None:
+if chip is None:
     exit("Read DEF Failed")
 exit()

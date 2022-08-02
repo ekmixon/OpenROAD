@@ -41,7 +41,7 @@ def plotTree(data, fn, fanout, title):
     else:
       plt.plot(data[i,0], data[i,1], 'ko', c='g')
     #plt.text(data[i,0]+1, data[i,1]+1, i, fontdict=font);
-  
+
   for i in range(len(data[:,0])):
     if (i == 0):
       continue
@@ -64,54 +64,49 @@ def plotTree(data, fn, fanout, title):
 
 
 def readTree(filename, idx):
-  fin = open(filename, 'r')
-  s = 'n%d' % (idx)
-  flag = False
-  cnt = 0;
-  for line in fin:
-    if ("Net" in line.split(' ')):
-      cnt = cnt + 1
-    if (cnt == idx):
-      break
+  with open(filename, 'r') as fin:
+    s = 'n%d' % (idx)
+    flag = False
+    cnt = 0;
+    for line in fin:
+      if ("Net" in line.split(' ')):
+        cnt = cnt + 1
+      if (cnt == idx):
+        break
 
-  for line in fin:
-    if(len(line.split(' ')) < 2):
-      break
-    X = float(line.split(' ')[1])
-    Y = float(line.split(' ')[2]) 
-    pid = int(line.split(' ')[3])
-    print(line)
-    if (flag == False):
-      data = np.array([X, Y, pid])
-      flag = True
-    else:
-      data = np.vstack([data, np.array([X, Y, pid])])
-
-  fin.close()
+    for line in fin:
+      if(len(line.split(' ')) < 2):
+        break
+      X = float(line.split(' ')[1])
+      Y = float(line.split(' ')[2]) 
+      pid = int(line.split(' ')[3])
+      print(line)
+      if (flag == False):
+        data = np.array([X, Y, pid])
+        flag = True
+      else:
+        data = np.vstack([data, np.array([X, Y, pid])])
 
   return data
 
 def parseData(filename):
-  fin  = open(filename, 'r')
-  cnt = 0;
-  for line in fin:
-    if ('Graph' in line.split(' ')):
-      cnt = cnt + 1
-  fin.close();
-
+  with open(filename, 'r') as fin:
+    cnt = 0;
+    for line in fin:
+      if ('Graph' in line.split(' ')):
+        cnt = cnt + 1
   data = np.zeros((cnt, 4))
-  fin  = open(filename, 'r')
-  line = fin.readline()
-  cnt = 0
-  for line in fin:
-    if ('Graph' in line.split(' ')):
-      WL = float(line.split(' ')[3])
-      MWL = float(line.split(' ')[5])
-      Light = float(line.split(' ')[7])
-      Shallow = float(line.split(' ')[9])
-      data[cnt] = np.asarray([WL, MWL, Light, Shallow]) 
-      cnt = cnt + 1
-  fin.close()
+  with open(filename, 'r') as fin:
+    line = fin.readline()
+    cnt = 0
+    for line in fin:
+      if ('Graph' in line.split(' ')):
+        WL = float(line.split(' ')[3])
+        MWL = float(line.split(' ')[5])
+        Light = float(line.split(' ')[7])
+        Shallow = float(line.split(' ')[9])
+        data[cnt] = np.asarray([WL, MWL, Light, Shallow]) 
+        cnt = cnt + 1
   return data
 
 #alpha = sys.argv[1]
@@ -130,22 +125,22 @@ def parseData(filename):
 
 title = "PD"
 fanout = 20
-data = readTree(title + ".txt", 1)
-fn = title + ".png"
+data = readTree(f"{title}.txt", 1)
+fn = f"{title}.png"
 plotTree(data, fn, fanout, title)
 
 title = "PD_II"
-data = readTree(title + ".txt", 1)
-fn = title + ".png"
+data = readTree(f"{title}.txt", 1)
+fn = f"{title}.png"
 plotTree(data, fn, fanout, title)
 
 title = "HVW"
-data = readTree(title + ".txt", 1)
-fn = title + ".png"
+data = readTree(f"{title}.txt", 1)
+fn = f"{title}.png"
 plotTree(data, fn, fanout, title)
 
 title = "DAS"
-data = readTree(title + ".txt", 1)
-fn = title + ".png"
+data = readTree(f"{title}.txt", 1)
+fn = f"{title}.png"
 plotTree(data, fn, fanout, title)
 

@@ -23,7 +23,7 @@ if (swire.getNet().getName() != net.getName()):
 sites = lib.getSites()
 site = sites[0]
 row = odb.dbRow_create(block, "row0", site, 0, 0, "RO", "HORIZONTAL", 1, 10)
-if row == None:
+if row is None:
     exit("ERROR: Row not created")
 print(net)
 print(row)

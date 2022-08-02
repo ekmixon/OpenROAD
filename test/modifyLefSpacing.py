@@ -17,19 +17,15 @@ args = parser.parse_args()
 
 print(os.path.basename(__file__),": Modify lef spacing in technology lef file")
 
-f = open(args.inputLef)
-content = f.read()
-f.close()
-
+with open(args.inputLef) as f:
+  content = f.read()
 pattern = r"PROPERTY LEF58_SPACING +.*?(SPACING.*?)\"\s+;"
 replace = r"\1"
 
 result,count = re.subn(pattern, replace, content, 0, re.S)
 
-f = open(args.outputLef, "w")
-f.write(result)
-f.close()
-
+with open(args.outputLef, "w") as f:
+  f.write(result)
 if count < 1:
   print("WARNING: Replacement pattern not found")
 

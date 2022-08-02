@@ -43,18 +43,12 @@ _removable = [
 
 def _stem(s):
     src = s.split(' ')
-    target = []
-    for item in src:
-        if item not in _removable:
-            target.append(item)
+    target = [item for item in src if item not in _removable]
     return ' '.join([str(elem) for elem in target])
 
 
 def getStruct(name, structs):
-    for struct in structs:
-        if struct['name'] == name:
-            return struct
-    return None
+    return next((struct for struct in structs if struct['name'] == name), None)
 
 
 def components(structs, name, _type):
@@ -66,9 +60,9 @@ def components(structs, name, _type):
         for field in struct['fields']:
             target = components(structs, field['name'], field['type'])
             if _type.find('*') == -1:
-                ret.extend([name + '.' + str(elem) for elem in target])
+                ret.extend([f'{name}.{str(elem)}' for elem in target])
             else:
-                ret.extend([name + '->' + str(elem) for elem in target])
+                ret.extend([f'{name}->{str(elem)}' for elem in target])
         return ret
     return []
 
@@ -88,10 +82,9 @@ def isBitFields(field, structs):
     struct = getStruct(field['type'], structs)
     if struct is None:
         return False
-    for struct_field in struct['fields']:
-        if isBitFields(struct_field, structs):
-            return True
-    return False
+    return any(
+        isBitFields(struct_field, structs) for struct_field in struct['fields']
+    )
 
 
 def getFunctionalName(name):
@@ -102,16 +95,20 @@ def getFunctionalName(name):
 
 
 def getClassIndex(schema, name):
-    for i in range(len(schema['classes'])):
-        if schema['classes'][i]['name'] == name:
-            return i
-    return -1
+    return next(
+        (
+            i
+            for i in range(len(schema['classes']))
+            if schema['classes'][i]['name'] == name
+        ),
+        -1,
+    )
 
 
 def getTableName(name):
     if len(name) > 2 and name[:2] == 'db':
         name = name[2:]
-    return '_{}_tbl'.format(name.lower())
+    return f'_{name.lower()}_tbl'
 
 
 def isRef(type_name):
@@ -127,7 +124,7 @@ def getHashTableType(type_name):
     if not isHashTable(type_name) or len(type_name) < 13:
         return None
 
-    return type_name[12:-1] + "*"
+    return f"{type_name[12:-1]}*"
 
 
 def isPassByRef(type_name):
@@ -173,4 +170,4 @@ def getRefType(type_name):
     if not isRef(type_name) or len(type_name) < 7:
         return None
 
-    return type_name[6:-1] + "*"
+    return f"{type_name[6:-1]}*"

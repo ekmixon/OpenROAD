@@ -27,11 +27,11 @@ assert len(block.getNets()) == 2, "Number of nets mismatch"
 assert len(block.getVias()) == 6, "Number of vias mismatch"
 assert len(block.getRows()) == 112, "Number of rows mismatch"
 bbox = block.getBBox()
-assert bbox.xMin() == 20140, "Bbox xMin mismatch" 
-assert bbox.yMin() == 22230, "Bbox xMan mismatch" 
-assert bbox.xMax() == 180120, "Bbox yMin mismatch" 
+assert bbox.xMin() == 20140, "Bbox xMin mismatch"
+assert bbox.yMin() == 22230, "Bbox xMan mismatch"
+assert bbox.xMax() == 180120, "Bbox yMin mismatch"
 assert bbox.yMax() == 179370, "Bbox yMax mismatch"
-assert block.getGCellGrid() == None, "G cell grid"
+assert block.getGCellGrid() is None, "G cell grid"
 die_area = block.getDieArea()
 assert [die_area.xMin(), die_area.yMin(), die_area.xMax(), die_area.yMax()] == [0, 0, 200260, 201600]
 assert len(block.getRegions()) == 0, "Number of regions mismatch"
@@ -55,7 +55,7 @@ assert row.getBBox().xMax() == 180120, "Row BBox XMax"
 assert row.getBBox().yMax() == 25200, "Row BBox yMax"
 
 ## Net checks
-nets = block.getNets() 
+nets = block.getNets()
 net = nets[0]
 assert net.getName() == "VDD", "Net name mismatch"
 assert net.isSpecial() == 1, "Net is special mismatch"
@@ -70,7 +70,7 @@ assert net.getSigType() == "POWER", "Net sig type mismatch"
 assert len(net.getSWires()) == 1, "Net Swire mismatch"
 # Need to fix
 #assert len(net.getGlobalWire()) == 1, "Net global wire mismatch"
-assert net.getNonDefaultRule() == None, "Net non default rule mismatch"
+assert net.getNonDefaultRule() is None, "Net non default rule mismatch"
 
 
 ## Special Wire checks
@@ -80,7 +80,7 @@ swire = swires[0]
 assert swire.getBlock().getName() == "gcd", "Special wire block name mismatch"
 assert swire.getNet().getName() == "VDD", "Special wire net mismatch"
 assert swire.getWireType() == "ROUTED", "Special wire type mismatch "
-assert swire.getShield() == None, "Special wire shield mismatch"
+assert swire.getShield() is None, "Special wire shield mismatch"
 assert len(swire.getWires()) == 219, "Special wire number of wires mismatch"
 
 wires = swire.getWires()
@@ -102,7 +102,7 @@ assert wire.getDir() == 0, "Special wire direction mismatch"
 
 wire = wires[34]
 assert wire.isVia() == 1, "Special wire is via mismatch"
-assert wire.getTechVia() == None, "Special wire tech via mismatch"
+assert wire.getTechVia() is None, "Special wire tech via mismatch"
 assert wire.getBlockVia().getName() == "via2_960x340", "Special wire block via mismatch"
 assert wire.getViaXY() == [24140, 22400], "Special wire Via XY  mismatch"
 assert len(wire.getViaBoxes(0)) == 5, "Special wire via box length mismatcj"
@@ -115,8 +115,8 @@ via = vias[0]
 assert via.getName() == "via1_960x340", "Via name mismatch"
 assert via.getPattern() == "", "Via pattern mismatch"
 #assert via.getGenerateRule().getName() == "Via1Array-0", "Via generate rule mismatch"
-assert via.getTechVia() == None, "Via get tech via mismatch"
-assert via.getBlockVia() == None, "Via get block via mismatch"
+assert via.getTechVia() is None, "Via get tech via mismatch"
+assert via.getBlockVia() is None, "Via get block via mismatch"
 assert via.getViaParams().getXCutSize() == 140, "Via get params mismatch"
 assert len(via.getBoxes()) == 5, "Via get boxes mismatch"
 assert via.getTopLayer().getName() == "metal2", "Via top layer mismatch"

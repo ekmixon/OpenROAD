@@ -23,11 +23,11 @@ def _getSections(lines, tag, sections=None, remove=False):
             name = line[len(tag):]
 
             if name in sections:
-                raise Exception("Duplicate Tag: {}".format(name))
+                raise Exception(f"Duplicate Tag: {name}")
 
             end = _findIndex(lines, line.replace('Begin', 'End', 1), i)
             if end == -1:
-                print('Could not find an End for tag {}\n'.format(name))
+                print(f'Could not find an End for tag {name}\n')
                 return False
             if remove:
                 del lines[i+1:end]
@@ -49,24 +49,20 @@ class Parser:
         self.generatorCodeTag = '//GeneratorCodeBegin'
 
     def setCommentStr(self, comment):
-        self.userCodeTag = '{}UserCodeBegin'.format(comment)
-        self.generatorCodeTag = '{}GeneratorCodeBegin'.format(comment)
+        self.userCodeTag = f'{comment}UserCodeBegin'
+        self.generatorCodeTag = f'{comment}GeneratorCodeBegin'
 
     def parseUserCode(self):
         self.userCode = {}
-        status = _getSections(self.lines, self.userCodeTag, self.userCode)
-        return status
+        return _getSections(self.lines, self.userCodeTag, self.userCode)
 
     def parseSourceCode(self, fileName):
         with open(fileName, 'r') as sourceFile:
             db_lines = sourceFile.readlines()
-        status = _getSections(db_lines, self.generatorCodeTag,
-                              self.generatorCode)
-        return status
+        return _getSections(db_lines, self.generatorCodeTag, self.generatorCode)
 
     def cleanCode(self):
-        status = _getSections(self.lines, self.generatorCodeTag, remove=True)
-        return status
+        return _getSections(self.lines, self.generatorCodeTag, remove=True)
 
     def writeInFile(self, fileName):
         for section in self.generatorCode:

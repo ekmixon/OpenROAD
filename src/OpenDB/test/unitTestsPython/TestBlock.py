@@ -75,8 +75,6 @@ class TestBlock(odbUnitTest.TestCase):
             n_s = odb.dbNet_create(self.block, 'n_s')
             swire = odb.dbSWire_create(n_s, 'NONE')
             odb.dbSBox_create(swire, self.lib.getTech().findLayer('L1'), 0, 4000, 100, 4100, 'NONE')
-        if((flag and test_num==5) or (not flag and test_num>=5)):
-            pass
             #TODO ADD WIRE
              
     def test_bbox0(self):

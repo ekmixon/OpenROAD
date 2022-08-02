@@ -8,14 +8,14 @@ data_dir = os.path.join(tests_dir, "data")
 
 db = odb.dbDatabase.create()
 lib = odb.read_lef(db, os.path.join(data_dir, "gscl45nm.lef"))
-if lib == None:
+if lib is None:
     exit("Lib not created")
- 
+
 tech = db.getTech()
-if tech == None:
+if tech is None:
     exit("Tech not created")
 
 via_rules = tech.getViaRules()
 
-if via_rules == None:
+if via_rules is None:
     exit("Via rules not found")

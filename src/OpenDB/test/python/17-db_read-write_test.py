@@ -13,7 +13,7 @@ chip = db.getChip()
 tech = db.getTech()
 libs = db.getLibs()
 
-if chip == None:
+if chip is None:
     exit("ERROR: READ DEF Failed")
 
 db_file = os.path.join(opendb_dir, "build/export.db")
@@ -24,7 +24,7 @@ if export_result!=1:
 new_db = odb.dbDatabase.create()
 new_db = odb.read_db(new_db, db_file)
 
-if new_db == None:
+if new_db is None:
     exit("Import DB Failed")
 
 if odb.db_diff(db, new_db):

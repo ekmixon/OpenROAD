@@ -81,10 +81,10 @@ def create1LevelBlock(db, lib, parent):
 # IN4--------|b    /
 #            +-----
 def create2LevelBlock(db, lib, parent):
-    
+
     blockName = '2LevelBlock'
     block = odb.dbBlock_create(parent, blockName, ',')
-    
+
     and2 = lib.findMaster('and2')
     or2 = lib.findMaster('or2')
     #creating instances
@@ -99,7 +99,7 @@ def create2LevelBlock(db, lib, parent):
     n5 = odb.dbNet.create(block, "n5")
     n6 = odb.dbNet.create(block, "n6")
     n7 = odb.dbNet.create(block, "n7")
-    
+
     IN1 = odb.dbBTerm.create(n1, 'IN1')
     IN1.setIoType('INPUT')
     IN2 = odb.dbBTerm.create(n2, 'IN2')
@@ -114,21 +114,21 @@ def create2LevelBlock(db, lib, parent):
     odb.dbITerm.connect(i1, n1, i1.getMaster().findMTerm('a'))
     odb.dbITerm.connect(i1, n2, i1.getMaster().findMTerm('b'))
     odb.dbITerm.connect(i1, n5, i1.getMaster().findMTerm('o'))
-    
+
     odb.dbITerm.connect(i2, n3, i2.getMaster().findMTerm('a'))
     odb.dbITerm.connect(i2, n4, i2.getMaster().findMTerm('b'))
     odb.dbITerm.connect(i2, n6, i2.getMaster().findMTerm('o'))
-    
+
     odb.dbITerm.connect(i3, n5, i3.getMaster().findMTerm('a'))
     odb.dbITerm.connect(i3, n6, i3.getMaster().findMTerm('b'))
     odb.dbITerm.connect(i3, n7, i3.getMaster().findMTerm('o'))
-    
+
     P1 = odb.dbBPin_create(IN1)
     P2 = odb.dbBPin_create(IN2)
     P3 = odb.dbBPin_create(IN3)
     P4 = odb.dbBPin_create(IN4)
     P5 = odb.dbBPin_create(OUT)
-    
+
     return block
 
 #  +-----

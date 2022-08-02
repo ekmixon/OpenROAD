@@ -62,13 +62,13 @@ for layer, box in layer_boxes:
         count_metal1 = count_metal1 +1
         metal1_shape_width = box.xMax() - box.xMin()
         metal1_shape_height = box.yMax() - box.yMin()
-    
-    if layer == 'metal2':
+
+    elif layer == 'metal2':
         count_metal2 = count_metal2 +1
         metal2_shape_width = box.xMax() - box.xMin()
         metal2_shape_height = box.yMax() - box.yMin()
 
-    if layer == 'via1':
+    elif layer == 'via1':
         count_via1 = count_via1 + 1
         if count_via1 == 1:
             via_shape_width = box.xMax() - box.xMin()
@@ -79,13 +79,13 @@ assert count_metal2 == 1, "Number of metal2 shapes"
 assert count_via1 == 3, "Number of via shapes"
 
 w_expected_metal1 = 3*140 + (3-1) * 160 + 2*110
-h_expected_metal1 =  1*140 + (1-1) * 160 + 2*100
+h_expected_metal1 = 1*140 + 0 * 160 + 2*100
 
 assert  metal1_shape_width == w_expected_metal1, "Metal1 width mismatch"
 assert  metal1_shape_height == h_expected_metal1, "Metal1 height mismatch"
 
 w_expected_metal2 = 3*140 + (3-1) * 160 + 2*110
-h_expected_metal2 =  1*140 + (1-1) * 160 + 2*100
+h_expected_metal2 = 1*140 + 0 * 160 + 2*100
 
 assert  metal2_shape_width == w_expected_metal2, "Metal2 width mismatch"
 assert  metal2_shape_height == h_expected_metal2, "Metal2 height mismatch"
